@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                             *
@@ -379,8 +381,22 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const newArr = arr;
+  let k;
+  function iter() {
+    k = 0;
+    for (let i = 0; i < newArr.length - 1; i += 1) {
+      if (newArr[i] > newArr[i + 1]) {
+        k += 1;
+        [newArr[i], newArr[i + 1]] = [newArr[i + 1], newArr[i]];
+      }
+    }
+  }
+  for (;;) {
+    iter();
+    if (k === 0) break;
+  }
 }
 
 /**
