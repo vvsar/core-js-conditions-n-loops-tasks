@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-param-reassign */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                             *
@@ -363,8 +361,14 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const newM = matrix;
+  const copy = JSON.parse(JSON.stringify(matrix));
+  for (let i = 0; i < newM.length; i += 1) {
+    for (let j = 0; j < newM.length; j += 1) {
+      newM[i][j] = copy[newM.length - j - 1][i];
+    }
+  }
 }
 
 /**
