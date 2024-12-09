@@ -342,8 +342,79 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const arr = new Array(size);
+  for (let k = 0; k < size; k += 1) {
+    arr[k] = new Array(size);
+  }
+  let curr = 1;
+  let i = 0;
+  let j = 0;
+  let dir = 'right';
+  function right() {
+    while (j < size) {
+      arr[i][j] = curr;
+      curr += 1;
+      j += 1;
+      if (arr[i][j] || j >= size) {
+        j -= 1;
+        i += 1;
+        dir = 'down';
+        break;
+      }
+    }
+  }
+  function down() {
+    while (i < size) {
+      arr[i][j] = curr;
+      curr += 1;
+      i += 1;
+      if (!arr[i] || arr[i][j] || i >= size) {
+        i -= 1;
+        j -= 1;
+        dir = 'left';
+        break;
+      }
+    }
+  }
+  function left() {
+    while (j >= 0) {
+      arr[i][j] = curr;
+      curr += 1;
+      j -= 1;
+      if (arr[i][j] || j < 0) {
+        j += 1;
+        i -= 1;
+        dir = 'up';
+        break;
+      }
+    }
+  }
+  function up() {
+    while (i >= 0) {
+      arr[i][j] = curr;
+      curr += 1;
+      i -= 1;
+      if (!arr[i] || arr[i][j] || i < 0) {
+        i += 1;
+        j += 1;
+        dir = 'right';
+        break;
+      }
+    }
+  }
+  while (curr <= size ** 2) {
+    if (dir === 'right') {
+      right();
+    } else if (dir === 'down') {
+      down();
+    } else if (dir === 'left') {
+      left();
+    } else {
+      up();
+    }
+  }
+  return arr;
 }
 
 /**
