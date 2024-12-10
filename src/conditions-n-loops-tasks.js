@@ -512,8 +512,47 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  function getArrayOfDigits(str) {
+    const arr1 = [];
+    for (let j = 0; j < str.length; j += 1) {
+      arr1.push(str[j]);
+    }
+    return arr1.map((el) => +el);
+  }
+  const nLength = number.toFixed().length;
+  for (let i = 2; i <= nLength; i += 1) {
+    const a = Math.floor(number / 10 ** i) * 10 ** i;
+    const b = number % 10 ** i;
+    let bStr = b.toFixed();
+    while (bStr.length < i) {
+      bStr = `0${bStr}`;
+    }
+    const arr = getArrayOfDigits(bStr);
+    if (arr[0] < Math.max(...arr)) {
+      const c = arr[0];
+      arr.sort((x, y) => x - y);
+      let idx;
+      for (let f = arr.length - 1; f >= 0; f -= 1) {
+        if (arr[f] === c) {
+          idx = f;
+          break;
+        }
+      }
+      const mid = (arr[idx + 1] || arr[idx]) * 10 ** (i - 1);
+      let endStr = '';
+      const filteredArr = arr.filter((_, index) => index !== idx + 1);
+      for (let m = 0; m < filteredArr.length; m += 1) {
+        endStr = `${endStr}${filteredArr[m]}`;
+      }
+      const end = +endStr;
+      const newNumber = a + mid + end;
+      if (newNumber > number) {
+        return newNumber;
+      }
+    }
+  }
+  return number;
 }
 
 module.exports = {
