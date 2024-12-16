@@ -522,18 +522,24 @@ function shuffleChar(str, iterations) {
   function shfl(string) {
     let str1 = '';
     let str2 = '';
-    for (let i = 0; i < string.length; i += 1) {
-      if (i % 2 === 0) {
-        str1 = `${str1}${string[i]}`;
-      } else {
-        str2 = `${str2}${string[i]}`;
-      }
+    for (let i = 0; i < string.length; i += 2) {
+      str1 = `${str1}${string[i]}`;
+    }
+    for (let i = 1; i < string.length; i += 2) {
+      str2 = `${str2}${string[i]}`;
     }
     return `${str1}${str2}`;
   }
   let newStr = str;
-  for (let j = 1; j <= iterations; j += 1) {
+  let it = iterations;
+  let j = 1;
+  while (j <= it) {
     newStr = shfl(newStr);
+    if (newStr === str) {
+      it %= j;
+      j = 0;
+    }
+    j += 1;
   }
   return newStr;
 }
