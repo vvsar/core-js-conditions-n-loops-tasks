@@ -471,21 +471,34 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const newArr = arr;
-  let k;
-  function iter() {
-    k = 0;
-    for (let i = 0; i < newArr.length - 1; i += 1) {
-      if (newArr[i] > newArr[i + 1]) {
-        k += 1;
-        [newArr[i], newArr[i + 1]] = [newArr[i + 1], newArr[i]];
+  if (arr.length < 2) return;
+  function swap(array, a, b) {
+    const ar = array;
+    [ar[a], ar[b]] = [ar[b], ar[a]];
+  }
+  function partition(array, lowIdx, highIdx) {
+    const ar = array;
+    const pivot = ar[highIdx];
+    let i = lowIdx - 1;
+    for (let j = lowIdx; j <= highIdx - 1; j += 1) {
+      if (arr[j] < pivot) {
+        i += 1;
+        swap(ar, i, j);
       }
     }
+    swap(ar, i + 1, highIdx);
+    return i + 1;
   }
-  for (;;) {
-    iter();
-    if (k === 0) break;
+  function quickSort(array, lowIdx, highIdx) {
+    const ar = array;
+    if (lowIdx < highIdx) {
+      const pivotIdx = partition(ar, lowIdx, highIdx);
+      quickSort(ar, lowIdx, pivotIdx - 1);
+      quickSort(ar, pivotIdx + 1, highIdx);
+    }
   }
+  const newArr = arr;
+  quickSort(newArr, 0, newArr.length - 1);
 }
 
 /**
